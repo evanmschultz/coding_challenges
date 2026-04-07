@@ -73,7 +73,7 @@ func parseArgs(args []string) (Config, error) {
 	showWords := fs.Bool("w", false, "count words")
 	showChars := fs.Bool("m", false, "count characters")
 
-	usageString := "usage: ccwc [-l] [-w] [-c | -m] <file>"
+	usageString := "usage: ccwc [-l] [-w] [-c] [-m] <file>"
 
 	if err := fs.Parse(args); err != nil {
 		return Config{}, fmt.Errorf("ccwc: %v\n%s", err, usageString)
@@ -89,10 +89,6 @@ func parseArgs(args []string) (Config, error) {
 		ShowLines: *showLines,
 		ShowWords: *showWords,
 		ShowChars: *showChars,
-	}
-
-	if cfg.ShowChars && cfg.ShowBytes {
-		return Config{}, fmt.Errorf("ccwc: -c and -m are mutually exclusive\n%s", usageString)
 	}
 
 	if !cfg.ShowBytes && !cfg.ShowLines && !cfg.ShowWords && !cfg.ShowChars {
